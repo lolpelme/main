@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta - Барбершоп</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#333333',secondary:'#666666'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <link rel="stylesheet" href="style.css">
+<style>
+    :where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+    font-family: 'Montserrat', sans-serif;
+    scroll-behavior: smooth;
+}
+.nav-link {
+    position: relative;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #333333;
+    transition: width 0.3s;
+}
+.nav-link.active::after,
+.nav-link:hover::after {
+    width: 100%;
+}
+.service-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+.service-content.open {
+    max-height: 1000px;
+}
+.work-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+.work-content.open {
+    max-height: 2000px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.custom-checkbox {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.custom-checkbox:hover input ~ .checkmark {
+    background-color: #f0f0f0;
+}
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: #333333;
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+.custom-checkbox .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.star-rating {
+    display: inline-flex;
+}
+.star {
+    color: #d1d5db;
+    transition: color 0.2s;
+}
+.star.filled {
+    color: #fbbf24;
+}
+.modal {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+.modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+.custom-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+.custom-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: #333333;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+.review-slider {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+.review-slide {
+    min-width: 100%;
+}
+.scissors-logo {
+    position: relative;
+    display: inline-block;
+}
+.scissors-logo::before,
+.scissors-logo::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: #333;
+    top: 50%;
+}
+.scissors-logo::before {
+    left: -25px;
+    transform: rotate(45deg);
+}
+.scissors-logo::after {
+    right: -25px;
+    transform: rotate(-45deg);
+}
+</style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <div class="scissors-logo">
+                    <span class="font-['Pacifico'] text-2xl text-primary">Delta</span>
+                </div>
+            </a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link active text-primary font-medium hover:text-primary transition-colors">Главная</a>
+                <a href="about.html" class="nav-link text-gray-600 font-medium hover:text-primary transition-colors">О нас</a>
+                <a href="works.html" class="nav-link text-gray-600 font-medium hover:text-primary transition-colors">Наши работы</a>
+            </nav>
+            <button id="bookBtn" class="bg-primary text-white px-6 py-2 !rounded-button font-medium hover:bg-opacity-90 transition-all whitespace-nowrap">Записаться</button>
+            <div class="md:hidden flex items-center">
+                <button id="mobileMenuBtn" class="w-8 h-8 flex items-center justify-center text-primary">
+                    <i class="ri-menu-line ri-lg"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white w-full">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="index.html" class="text-primary font-medium hover:text-primary transition-colors">Главная</a>
+                <a href="about.html" class="text-gray-600 font-medium hover:text-primary transition-colors">О нас</a>
+                <a href="works.html" class="text-gray-600 font-medium hover:text-primary transition-colors">Наши работы</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <section id="home" class="pt-24">
+            <!-- Hero Section -->
+            <div class="relative h-[600px] bg-cover bg-center" style="background-image: url('https://p1.zoon.ru/preview/aSN_z6-1lBQnOJ8QgjEffA/587x440x85/1/7/3/original_5af53c1e3a245b767a19617d_5af56712ea85b.jpg');">
+                <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+                <div class="container mx-auto px-4 h-full flex items-center relative z-10">
+                    <div class="max-w-2xl">
+                        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">Стиль и качество в каждой стрижке</h1>
+                        <p class="text-xl text-gray-200 mb-8">Барбершоп Delta — место, где создаются идеальные мужские образы. Доверьтесь профессионалам своего дела.</p>
+                        <div class="flex flex-wrap gap-4">
+                            <button id="heroBookBtn" class="bg-primary text-white px-8 py-3 !rounded-button font-medium hover:bg-opacity-90 transition-all whitespace-nowrap">Записаться сейчас</button>
+                            <a href="#services" class="bg-transparent border-2 border-white text-white px-8 py-3 !rounded-button font-medium hover:bg-white hover:text-primary transition-all whitespace-nowrap">Наши услуги</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Us Section -->
+            <div class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold text-center text-primary mb-12">Почему выбирают нас</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-gray-50 p-8 rounded shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-16 h-16 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mb-6">
+                                <i class="ri-scissors-line ri-2x text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4">Профессиональная команда</h3>
+                            <p class="text-gray-600">Наши мастера — опытные барберы с многолетним стажем, регулярно повышающие квалификацию.</p>
+                        </div>
+                        <div class="bg-gray-50 p-8 rounded shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-16 h-16 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mb-6">
+                                <i class="ri-award-line ri-2x text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4">Премиальные продукты</h3>
+                            <p class="text-gray-600">Мы используем только высококачественную косметику от ведущих мировых брендов.</p>
+                        </div>
+                        <div class="bg-gray-50 p-8 rounded shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-16 h-16 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mb-6">
+                                <i class="ri-customer-service-line ri-2x text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4">Индивидуальный подход</h3>
+                            <p class="text-gray-600">Каждый клиент получает персональные рекомендации и стрижку, подходящую именно его типу внешности.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hours & Price Section -->
+            <div class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <!-- Hours -->
+                        <div>
+                            <h2 class="text-3xl font-bold text-primary mb-8">Время работы</h2>
+                            <div class="bg-white p-8 rounded shadow-sm">
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Понедельник</span>
+                                    <span>10:00 - 20:00</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Вторник</span>
+                                    <span>10:00 - 20:00</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Среда</span>
+                                    <span>10:00 - 20:00</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Четверг</span>
+                                    <span>10:00 - 20:00</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Пятница</span>
+                                    <span>10:00 - 21:00</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Суббота</span>
+                                    <span>9:00 - 21:00</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3">
+                                    <span class="font-medium">Воскресенье</span>
+                                    <span>9:00 - 18:00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Price List -->
+                        <div>
+                            <h2 class="text-3xl font-bold text-primary mb-8">Прайс-лист</h2>
+                            <div class="bg-white p-8 rounded shadow-sm">
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Мужская стрижка</span>
+                                    <span class="font-semibold">от 1500 ₽</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Стрижка машинкой</span>
+                                    <span class="font-semibold">от 800 ₽</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Бритье бороды</span>
+                                    <span class="font-semibold">от 1200 ₽</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Моделирование бороды</span>
+                                    <span class="font-semibold">от 1000 ₽</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium">Детская стрижка</span>
+                                    <span class="font-semibold">от 1000 ₽</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3">
+                                    <span class="font-medium">Комплекс (стрижка + борода)</span>
+                                    <span class="font-semibold">от 2500 ₽</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div id="services" class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold text-center text-primary mb-12">Наши услуги</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+                        <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://barbershop-dynasty.by/media/nxtn4fms/muzskaia-strizka.webp" alt="Мужская стрижка" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-3">Мужская стрижка</h3>
+                                <p class="text-gray-600 mb-4">Классическая мужская стрижка с учетом индивидуальных особенностей клиента и его пожеланий.</p>
+                                <p class="font-semibold text-primary">от 1500 ₽</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://brilnya.ru/images/blog/modelirovanie-borodi.jpg" alt="Моделирование бороды" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-3">Моделирование бороды</h3>
+                                <p class="text-gray-600 mb-4">Профессиональное оформление бороды с учетом формы лица и стиля клиента.</p>
+                                <p class="font-semibold text-primary">от 1000 ₽</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://oldboybarbershop.com/sites/all/themes/oldboy8/dist/img/royal/royal3.jpg" alt="Королевское бритье" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-3">Королевское бритье</h3>
+                                <p class="text-gray-600 mb-4">Традиционное бритье опасной бритвой с использованием горячих полотенец и ароматных масел.</p>
+                                <p class="font-semibold text-primary">от 1800 ₽</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+                            <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <div class="h-48 overflow-hidden">
+                                    <img src="https://avatars.mds.yandex.net/get-sprav-products/5632604/2a00000180e76c8ad3442842f68d451c652a/XXL" alt="Детская стрижка" class="w-full h-full object-cover object-top">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold mb-3">Детская стрижка</h3>
+                                    <p class="text-gray-600 mb-4">Стрижка для мальчиков до 12 лет с учетом возрастных особенностей и пожеланий родителей.</p>
+                                    <p class="font-semibold text-primary">от 1000 ₽</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <div class="h-48 overflow-hidden">
+                                    <img src="https://barber-shop.su/wp-content/uploads/2020/04/muzhskoe-okrashivanie-volos.jpg" alt="Окрашивание" class="w-full h-full object-cover object-top">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold mb-3">Окрашивание</h3>
+                                    <p class="text-gray-600 mb-4">Профессиональное окрашивание волос с использованием премиальных красителей.</p>
+                                    <p class="font-semibold text-primary">от 2500 ₽</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <div class="h-48 overflow-hidden">
+                                    <img src="https://headshotbarbershop.com/wp-content/uploads/2022/02/20220216_101020-scaled-2048x1024.jpg" alt="Уход за лицом" class="w-full h-full object-cover object-top">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold mb-3">Уход за лицом</h3>
+                                    <p class="text-gray-600 mb-4">Комплексные процедуры по уходу за кожей лица, включая маски и массаж.</p>
+                                    <p class="font-semibold text-primary">от 2000 ₽</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button id="servicesMoreBtn" class="bg-transparent border border-primary text-primary px-8 py-3 !rounded-button font-medium hover:bg-primary hover:text-white transition-all whitespace-nowrap">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold text-center text-primary mb-12">Отзывы наших клиентов</h2>
+                    
+                    <div class="relative">
+                        <div class="overflow-hidden">
+                            <div class="review-slider">
+                                <div class="review-slide px-4">
+                                    <div class="bg-white p-8 rounded shadow-sm">
+                                        <div class="flex items-center mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+                                                <i class="ri-user-line ri-lg text-gray-500"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">Алексей Смирнов</h4>
+                                                <div class="star-rating">
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 italic">"Хожу в Delta уже больше года и всегда доволен результатом. Мастер Игорь отлично понимает, что мне нужно, даже когда я сам не могу точно объяснить. Атмосфера в барбершопе всегда приятная, предлагают кофе или виски, что тоже радует."</p>
+                                    </div>
+                                </div>
+                                <div class="review-slide px-4">
+                                    <div class="bg-white p-8 rounded shadow-sm">
+                                        <div class="flex items-center mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+                                                <i class="ri-user-line ri-lg text-gray-500"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">Дмитрий Козлов</h4>
+                                                <div class="star-rating">
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star"><i class="ri-star-fill"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 italic">"Первый раз пришел по рекомендации друга и остался очень доволен. Мастер Антон сделал отличную стрижку и дал рекомендации по уходу за волосами. Теперь только сюда. Единственный минус — иногда бывает сложно записаться на удобное время."</p>
+                                    </div>
+                                </div>
+                                <div class="review-slide px-4">
+                                    <div class="bg-white p-8 rounded shadow-sm">
+                                        <div class="flex items-center mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+                                                <i class="ri-user-line ri-lg text-gray-500"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">Максим Петров</h4>
+                                                <div class="star-rating">
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                    <span class="star filled"><i class="ri-star-fill"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 italic">"Делал королевское бритье — это просто невероятные ощущения! Мастер Сергей провел процедуру как настоящий профессионал. Отдельное спасибо за массаж лица в конце процедуры. Всем рекомендую попробовать хотя бы раз."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="prevReview" class="absolute top-1/2 left-0 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-md z-10">
+                            <i class="ri-arrow-left-s-line ri-lg text-primary"></i>
+                        </button>
+                        <button id="nextReview" class="absolute top-1/2 right-0 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-md z-10">
+                            <i class="ri-arrow-right-s-line ri-lg text-primary"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex justify-center mt-8">
+                        <span id="dot0" class="w-3 h-3 rounded-full bg-primary mx-1 cursor-pointer"></span>
+                        <span id="dot1" class="w-3 h-3 rounded-full bg-gray-300 mx-1 cursor-pointer"></span>
+                        <span id="dot2" class="w-3 h-3 rounded-full bg-gray-300 mx-1 cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="scissors-logo mb-6">
+                        <span class="font-['Pacifico'] text-3xl text-white">Delta</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Профессиональный барбершоп для настоящих мужчин. Качественные стрижки, бритье и уход за бородой.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+                            <i class="ri-instagram-line ri-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+                            <i class="ri-vk-line ri-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+                            <i class="ri-telegram-line ri-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Контакты</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3 mt-1">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <p class="text-gray-400">г. Москва, ул. Тверская, д. 15, стр. 2</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3 mt-1">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <p class="text-gray-400">+7 (495) 123-45-67</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3 mt-1">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <p class="text-gray-400">info@delta-barbershop.ru</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Время работы</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Понедельник - Пятница</span>
+                            <span class="text-gray-400">10:00 - 20:00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Суббота</span>
+                            <span class="text-gray-400">9:00 - 21:00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Воскресенье</span>
+                            <span class="text-gray-400">9:00 - 18:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-500">© 2025 Delta Barbershop. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="bookingModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 overflow-hidden">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h3 class="text-xl font-semibold text-primary">Запись на стрижку</h3>
+                <button id="closeModal" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                    <i class="ri-close-line ri-lg"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <form id="bookingForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="name">Ваше имя</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" id="name" type="text" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="phone">Телефон</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" id="phone" type="tel" placeholder="+7 (___) ___-__-__" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="service">Услуга</label>
+                        <div class="relative">
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-8" id="service" required>
+                                <option value="" disabled selected>Выберите услугу</option>
+                                <option value="haircut">Мужская стрижка</option>
+                                <option value="beard">Моделирование бороды</option>
+                                <option value="shave">Королевское бритье</option>
+                                <option value="complex">Комплекс (стрижка + борода)</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <i class="ri-arrow-down-s-line text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="date">Дата</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" id="date" type="date" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="time">Время</label>
+                        <div class="relative">
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-8" id="time" required>
+                                <option value="" disabled selected>Выберите время</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <i class="ri-arrow-down-s-line text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" required>
+                            <span class="checkmark"></span>
+                            <span class="text-sm text-gray-700">Я согласен на обработку персональных данных</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-opacity-90 transition-all whitespace-nowrap">Записаться</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Navigation Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                if (mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.remove('hidden');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Services Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const servicesMoreBtn = document.getElementById('servicesMoreBtn');
+            const serviceContent = document.querySelector('.service-content');
+            
+            servicesMoreBtn.addEventListener('click', function() {
+                if (serviceContent.classList.contains('open')) {
+                    serviceContent.classList.remove('open');
+                    servicesMoreBtn.textContent = 'Подробнее';
+                } else {
+                    serviceContent.classList.add('open');
+                    servicesMoreBtn.textContent = 'Свернуть';
+                }
+            });
+        });
+
+        // Reviews Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.review-slider');
+            const slides = document.querySelectorAll('.review-slide');
+            const prevBtn = document.getElementById('prevReview');
+            const nextBtn = document.getElementById('nextReview');
+            const dots = [
+                document.getElementById('dot0'),
+                document.getElementById('dot1'),
+                document.getElementById('dot2')
+            ];
+            
+            let currentSlide = 0;
+            const slideCount = slides.length;
+            
+            function goToSlide(index) {
+                if (index < 0) {
+                    index = slideCount - 1;
+                } else if (index >= slideCount) {
+                    index = 0;
+                }
+                
+                slider.style.transform = `translateX(-${index * 100}%)`;
+                currentSlide = index;
+                
+                // Update dots
+                dots.forEach((dot, i) => {
+                    if (i === currentSlide) {
+                        dot.classList.remove('bg-gray-300');
+                        dot.classList.add('bg-primary');
+                    } else {
+                        dot.classList.remove('bg-primary');
+                        dot.classList.add('bg-gray-300');
+                    }
+                });
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentSlide - 1);
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+            });
+            
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    goToSlide(i);
+                });
+            });
+            
+            // Auto slide
+            let interval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 5000);
+            
+            // Pause on hover
+            slider.addEventListener('mouseenter', () => {
+                clearInterval(interval);
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                interval = setInterval(() => {
+                    goToSlide(currentSlide + 1);
+                }, 5000);
+            });
+        });
+
+        // Modal Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookBtn = document.getElementById('bookBtn');
+            const heroBookBtn = document.getElementById('heroBookBtn');
+            const closeModal = document.getElementById('closeModal');
+            const bookingModal = document.getElementById('bookingModal');
+            const bookingForm = document.getElementById('bookingForm');
+            
+            function openModal() {
+                bookingModal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeModalFunc() {
+                bookingModal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+            
+            bookBtn.addEventListener('click', openModal);
+            heroBookBtn.addEventListener('click', openModal);
+            
+            closeModal.addEventListener('click', closeModalFunc);
+            
+            bookingModal.addEventListener('click', function(e) {
+                if (e.target === bookingModal) {
+                    closeModalFunc();
+                }
+            });
+            
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would normally send the form data to the server
+                alert('Спасибо за запись! Мы свяжемся с вами для подтверждения.');
+                
+                closeModalFunc();
+                bookingForm.reset();
+            });
+            
+            // Phone mask
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                let formattedValue = '';
+                
+                if (value.length > 0) {
+                    formattedValue = '+7 ';
+                    
+                    if (value.length > 1) {
+                        formattedValue += `(${value.substring(1, Math.min(4, value.length))})`;
+                    }
+                    
+                    if (value.length > 4) {
+                        formattedValue += ` ${value.substring(4, Math.min(7, value.length))}`;
+                    }
+                    
+                    if (value.length > 7) {
+                        formattedValue += `-${value.substring(7, Math.min(9, value.length))}`;
+                    }
+                    
+                    if (value.length > 9) {
+                        formattedValue += `-${value.substring(9, Math.min(11, value.length))}`;
+                    }
+                }
+                
+                e.target.value = formattedValue;
+            });
+            
+            // Set min date to today
+            const dateInput = document.getElementById('date');
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+            
+            if (mm < 10) mm = '0' + mm;
+            if (dd < 10) dd = '0' + dd;
+            
+            const formattedToday = yyyy + '-' + mm + '-' + dd;
+            dateInput.min = formattedToday;
+        });
+    </script>
+</body>
+</html>
