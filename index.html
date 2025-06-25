@@ -5,200 +5,227 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delta - Барбершоп</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>tailwind.config={theme:{extend:{colors:{primary:'#333333',secondary:'#666666'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#333333',
+                        secondary: '#666666'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-    <link rel="stylesheet" href="style.css">
-<style>
-    :where([class^="ri-"])::before { content: "\f3c2"; }
-body {
-    font-family: 'Montserrat', sans-serif;
-    scroll-behavior: smooth;
-}
-.nav-link {
-    position: relative;
-}
-.nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background-color: #333333;
-    transition: width 0.3s;
-}
-.nav-link.active::after,
-.nav-link:hover::after {
-    width: 100%;
-}
-.service-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease;
-}
-.service-content.open {
-    max-height: 1000px;
-}
-.work-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease;
-}
-.work-content.open {
-    max-height: 2000px;
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-.custom-checkbox {
-    position: relative;
-    padding-left: 30px;
-    cursor: pointer;
-    user-select: none;
-}
-.custom-checkbox input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-.custom-checkbox:hover input ~ .checkmark {
-    background-color: #f0f0f0;
-}
-.custom-checkbox input:checked ~ .checkmark {
-    background-color: #333333;
-}
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-.custom-checkbox input:checked ~ .checkmark:after {
-    display: block;
-}
-.custom-checkbox .checkmark:after {
-    left: 7px;
-    top: 3px;
-    width: 6px;
-    height: 11px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-.star-rating {
-    display: inline-flex;
-}
-.star {
-    color: #d1d5db;
-    transition: color 0.2s;
-}
-.star.filled {
-    color: #fbbf24;
-}
-.modal {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-}
-.modal.open {
-    opacity: 1;
-    visibility: visible;
-}
-.custom-switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-}
-.custom-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 24px;
-}
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-input:checked + .slider {
-    background-color: #333333;
-}
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-.review-slider {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-.review-slide {
-    min-width: 100%;
-}
-.scissors-logo {
-    position: relative;
-    display: inline-block;
-}
-.scissors-logo::before,
-.scissors-logo::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 2px;
-    background-color: #333;
-    top: 50%;
-}
-.scissors-logo::before {
-    left: -25px;
-    transform: rotate(45deg);
-}
-.scissors-logo::after {
-    right: -25px;
-    transform: rotate(-45deg);
-}
-</style>
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #333333;
+            transition: width 0.3s;
+        }
+        .nav-link.active::after,
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .service-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .service-content.open {
+            max-height: 1000px;
+        }
+        .work-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .work-content.open {
+            max-height: 2000px;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .custom-checkbox {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .custom-checkbox:hover input ~ .checkmark {
+            background-color: #f0f0f0;
+        }
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #333333;
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .custom-checkbox .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 11px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .star-rating {
+            display: inline-flex;
+        }
+        .star {
+            color: #d1d5db;
+            transition: color 0.2s;
+        }
+        .star.filled {
+            color: #fbbf24;
+        }
+        .modal {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .custom-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .custom-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #333333;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .review-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .review-slide {
+            min-width: 100%;
+        }
+        .scissors-logo {
+            position: relative;
+            display: inline-block;
+        }
+        .scissors-logo::before,
+        .scissors-logo::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background-color: #333;
+            top: 50%;
+        }
+        .scissors-logo::before {
+            left: -25px;
+            transform: rotate(45deg);
+        }
+        .scissors-logo::after {
+            right: -25px;
+            transform: rotate(-45deg);
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header -->
     <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center">
+            <a href="#" class="flex items-center" id="homeLink">
                 <div class="scissors-logo">
                     <span class="font-['Pacifico'] text-2xl text-primary">Delta</span>
                 </div>
             </a>
             <nav class="hidden md:flex space-x-8">
-                <a href="index.html" class="nav-link active text-primary font-medium hover:text-primary transition-colors">Главная</a>
-                <a href="about.html" class="nav-link text-gray-600 font-medium hover:text-primary transition-colors">О нас</a>
-                <a href="works.html" class="nav-link text-gray-600 font-medium hover:text-primary transition-colors">Наши работы</a>
+                <a href="#" class="nav-link text-gray-600 font-medium hover:text-primary transition-colors page-link" data-page="home">Главная</a>
+                <a href="#" class="nav-link text-gray-600 font-medium hover:text-primary transition-colors page-link" data-page="about">О нас</a>
+                <a href="#" class="nav-link text-gray-600 font-medium hover:text-primary transition-colors page-link" data-page="works">Наши работы</a>
             </nav>
             <button id="bookBtn" class="bg-primary text-white px-6 py-2 !rounded-button font-medium hover:bg-opacity-90 transition-all whitespace-nowrap">Записаться</button>
             <div class="md:hidden flex items-center">
@@ -209,18 +236,15 @@ input:checked + .slider:before {
         </div>
         <div id="mobileMenu" class="hidden md:hidden bg-white w-full">
             <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
-                <a href="index.html" class="text-primary font-medium hover:text-primary transition-colors">Главная</a>
-                <a href="about.html" class="text-gray-600 font-medium hover:text-primary transition-colors">О нас</a>
-                <a href="works.html" class="text-gray-600 font-medium hover:text-primary transition-colors">Наши работы</a>
+                <a href="#" class="text-gray-600 font-medium hover:text-primary transition-colors page-link" data-page="home">Главная</a>
+                <a href="#" class="text-gray-600 font-medium hover:text-primary transition-colors page-link" data-page="about">О нас</a>
+                <a href="#" class="text-gray-600 font-medium hover:text-primary transition-colors page-link" data-page="works">Наши работы</a>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Home Page -->
-        <section id="home" class="pt-24">
-            <!-- Hero Section -->
+        <section id="home" class="page active pt-24">
             <div class="relative h-[600px] bg-cover bg-center" style="background-image: url('https://p1.zoon.ru/preview/aSN_z6-1lBQnOJ8QgjEffA/587x440x85/1/7/3/original_5af53c1e3a245b767a19617d_5af56712ea85b.jpg');">
                 <div class="absolute inset-0 bg-black bg-opacity-50"></div>
                 <div class="container mx-auto px-4 h-full flex items-center relative z-10">
@@ -235,7 +259,6 @@ input:checked + .slider:before {
                 </div>
             </div>
 
-            <!-- Why Us Section -->
             <div class="py-16 bg-white">
                 <div class="container mx-auto px-4">
                     <h2 class="text-3xl font-bold text-center text-primary mb-12">Почему выбирают нас</h2>
@@ -265,11 +288,9 @@ input:checked + .slider:before {
                 </div>
             </div>
 
-            <!-- Hours & Price Section -->
             <div class="py-16 bg-gray-50">
                 <div class="container mx-auto px-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <!-- Hours -->
                         <div>
                             <h2 class="text-3xl font-bold text-primary mb-8">Время работы</h2>
                             <div class="bg-white p-8 rounded shadow-sm">
@@ -304,7 +325,6 @@ input:checked + .slider:before {
                             </div>
                         </div>
                         
-                        <!-- Price List -->
                         <div>
                             <h2 class="text-3xl font-bold text-primary mb-8">Прайс-лист</h2>
                             <div class="bg-white p-8 rounded shadow-sm">
@@ -338,7 +358,6 @@ input:checked + .slider:before {
                 </div>
             </div>
 
-            <!-- Services Section -->
             <div id="services" class="py-16 bg-white">
                 <div class="container mx-auto px-4">
                     <h2 class="text-3xl font-bold text-center text-primary mb-12">Наши услуги</h2>
@@ -346,7 +365,7 @@ input:checked + .slider:before {
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
                         <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                             <div class="h-48 overflow-hidden">
-                                <img src="https://barbershop-dynasty.by/media/nxtn4fms/muzskaia-strizka.webp" alt="Мужская стрижка" class="w-full h-full object-cover object-top">
+                                <img src="https://top-barbershop.com/media/2017/02/fsfgpzkxCwQ.jpg" alt="Мужская стрижка" class="w-full h-full object-cover object-top">
                             </div>
                             <div class="p-6">
                                 <h3 class="text-xl font-semibold mb-3">Мужская стрижка</h3>
@@ -421,7 +440,6 @@ input:checked + .slider:before {
                 </div>
             </div>
 
-            <!-- Reviews Section -->
             <div class="py-16 bg-gray-50">
                 <div class="container mx-auto px-4">
                     <h2 class="text-3xl font-bold text-center text-primary mb-12">Отзывы наших клиентов</h2>
@@ -508,9 +526,185 @@ input:checked + .slider:before {
                 </div>
             </div>
         </section>
+
+        <section id="about" class="page pt-24">
+            <div class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold text-center text-primary mb-12">Наша команда</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://gelendjik.trade-services.ru/img/cke/iurist-51.jpg" alt="Игорь Васильев" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-1">Игорь Васильев</h3>
+                                <p class="text-gray-500 mb-4">32 года, старший барбер</p>
+                                <p class="text-gray-600 italic mb-4">"Стрижка — это не просто изменение длины волос, это создание нового образа, который подчеркнет индивидуальность клиента."</p>
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-instagram-line"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-vk-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://frisor.ua/wp-content/uploads/2019/01/4-1024x683.jpg" alt="Антон Соколов" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-1">Антон Соколов</h3>
+                                <p class="text-gray-500 mb-4">28 лет, барбер</p>
+                                <p class="text-gray-600 italic mb-4">"Каждый мужчина заслуживает выглядеть лучше, чем он думает. Моя задача — показать ему это."</p>
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-instagram-line"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-vk-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://dellon-school.ru/wp-content/uploads/2022/08/ChEM-OTLIChAETSYa-PROFESSIYa-BARBER-OT-MUZhSKOGO-MASTERA-PARIKMAHERA.jpg" alt="Сергей Морозов" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-1">Сергей Морозов</h3>
+                                <p class="text-gray-500 mb-4">41 год, барбер</p>
+                                <p class="text-gray-600 italic mb-4">"Традиции барберинга — это искусство, которое передается из поколения в поколение. Я горжусь тем, что являюсь частью этой истории."</p>
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-instagram-line"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-vk-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://oldboybarbershop.com/sites/default/files/2020-10/blog-ledi-barber-3.jpg" alt="Анна Кузнецова" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-1">Анна Кузнецова</h3>
+                                <p class="text-gray-500 mb-4">26 лет, барбер</p>
+                                <p class="text-gray-600 italic mb-4">"Женщина-барбер может привнести свежий взгляд в мужскую стрижку. Я люблю ломать стереотипы и создавать уникальные образы."</p>
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-instagram-line"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-vk-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://i.pinimg.com/564x/cf/62/96/cf6296d686374294a039335e27f9060a.jpg" alt="Максим Волков" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-1">Максим Волков</h3>
+                                <p class="text-gray-500 mb-4">34 года, барбер</p>
+                                <p class="text-gray-600 italic mb-4">"В моей работе важно не только мастерство, но и умение слушать клиента. Только так можно достичь идеального результата."</p>
+                                <div class="flex space-x-3">
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-instagram-line"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary">
+                                        <i class="ri-vk-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 class="text-3xl font-bold text-primary mb-6">Наша история</h2>
+                            <p class="text-gray-600 mb-4">Барбершоп Delta был основан в 2018 году группой единомышленников, объединенных страстью к барберскому искусству и желанием создать место, где мужчины могут получить не только качественную стрижку, но и насладиться особой атмосферой.</p>
+                            <p class="text-gray-600 mb-4">За прошедшие годы мы выросли из небольшой студии в полноценный барбершоп с командой профессиональных мастеров, каждый из которых является экспертом в своем деле.</p>
+                            <p class="text-gray-600">Наша философия проста — мы стремимся подчеркнуть индивидуальность каждого клиента через качественную стрижку и безупречный сервис. Мы не просто стрижем волосы, мы создаем стиль и настроение.</p>
+                        </div>
+                        <div>
+                            <img src="https://p0.zoon.ru/6/7/6764087d0e13b1a8c50f669b_6809e090936915.82897887.jpg" alt="Интерьер барбершопа Delta" class="w-full h-auto rounded shadow-md">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="works" class="page pt-24">
+            <div class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold text-center text-primary mb-12">Наши работы</h2>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                            <img src="https://balanceclub.ru/wp-content/uploads/2020/05/s1200-1.jpg" alt="Мужская стрижка" class="w-full h-auto">
+                        </div>
+                        <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                            <img src="https://m66-barbershop-spb.ru/build/images/services/beard_decoration/work_examples/2.jpg" alt="Оформление бороды" class="w-full h-auto">
+                        </div>
+                        <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYx9sMK8-OZlEG7dVolhwMcYs2AnrP0glTQA&s" alt="Классическая стрижка" class="w-full h-auto">
+                        </div>
+                        <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                            <img src="https://static.tildacdn.com/tild3134-3933-4762-a535-333432363438/hightfade4.jpg" alt="Современная стрижка" class="w-full h-auto">
+                        </div>
+                        <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                            <img src="https://headshotbarbershop.com/wp-content/uploads/2019/12/2019-11-12-12-43-14-045-1.jpg" alt="Стрижка и борода" class="w-full h-auto">
+                        </div>
+                        <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGrO7GHwIDA0l4nsUnSzzgVut4ICL6DfvGoA&s" alt="Текстурированная стрижка" class="w-full h-auto">
+                        </div>
+                    </div>
+                    
+                    <div class="work-content">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                            <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                                <img src="https://www.reuzel.com/cdn/shop/articles/pompadour-hairstyle_cff7e785-56b8-4ca8-baea-bd0362889b8e.jpg?v=1742496570&width=1100" alt="Помпадур" class="w-full h-auto">
+                            </div>
+                            <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                                <img src="https://top-barbershop.com/media/2019/03/2019-04-26-11.25.57-e1556267377928-635x700.jpg" alt="Короткая стрижка" class="w-full h-auto">
+                            </div>
+                            <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                                <img src="https://static.tildacdn.com/tild3861-6438-4539-b462-653239663833/2_6.png" alt="Средняя длина" class="w-full h-auto">
+                            </div>
+                            <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                                <img src="https://m66-barbershop-spb.ru/build/images/services/beard_decoration/work_examples/1.jpg" alt="Короткая борода" class="w-full h-auto">
+                            </div>
+                            <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                                <img src="https://gentstyle.ru/wp-content/uploads/2020/04/slick-back-hair-on-top-razor-fade.jpg" alt="Зачесанные назад волосы" class="w-full h-auto">
+                            </div>
+                            <div class="overflow-hidden rounded shadow-sm hover:shadow-md transition-shadow">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWkY3sET4ZZRdKMT_KMEvhF2UBkwLFPaI06A&s" alt="Кудрявые волосы" class="w-full h-auto">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-12">
+                        <button id="worksMoreBtn" class="bg-transparent border border-primary text-primary px-8 py-3 !rounded-button font-medium hover:bg-primary hover:text-white transition-all whitespace-nowrap">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -581,7 +775,6 @@ input:checked + .slider:before {
         </div>
     </footer>
 
-    <!-- Modal -->
     <div id="bookingModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 overflow-hidden">
             <div class="flex justify-between items-center p-6 border-b">
@@ -653,14 +846,45 @@ input:checked + .slider:before {
         </div>
     </div>
 
-    <!-- Scripts -->
     <script>
-        // Navigation Script
         document.addEventListener('DOMContentLoaded', function() {
+            const pageLinks = document.querySelectorAll('.page-link');
+            const pages = document.querySelectorAll('.page');
+            
+            function switchPage(pageId) {
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+                
+                pageLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                document.getElementById('mobileMenu').classList.add('hidden');
+                
+                window.scrollTo(0, 0);
+            }
+            
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    switchPage(pageId);
+                });
+            });
+            
+            document.getElementById('homeLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                switchPage('home');
+            });
+            
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileMenu = document.getElementById('mobileMenu');
             
-            // Mobile menu toggle
             mobileMenuBtn.addEventListener('click', function() {
                 if (mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.remove('hidden');
@@ -670,91 +894,104 @@ input:checked + .slider:before {
             });
         });
 
-        // Services Script
         document.addEventListener('DOMContentLoaded', function() {
             const servicesMoreBtn = document.getElementById('servicesMoreBtn');
-            const serviceContent = document.querySelector('.service-content');
-            
-            servicesMoreBtn.addEventListener('click', function() {
-                if (serviceContent.classList.contains('open')) {
-                    serviceContent.classList.remove('open');
-                    servicesMoreBtn.textContent = 'Подробнее';
-                } else {
-                    serviceContent.classList.add('open');
-                    servicesMoreBtn.textContent = 'Свернуть';
-                }
-            });
-        });
-
-        // Reviews Script
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.querySelector('.review-slider');
-            const slides = document.querySelectorAll('.review-slide');
-            const prevBtn = document.getElementById('prevReview');
-            const nextBtn = document.getElementById('nextReview');
-            const dots = [
-                document.getElementById('dot0'),
-                document.getElementById('dot1'),
-                document.getElementById('dot2')
-            ];
-            
-            let currentSlide = 0;
-            const slideCount = slides.length;
-            
-            function goToSlide(index) {
-                if (index < 0) {
-                    index = slideCount - 1;
-                } else if (index >= slideCount) {
-                    index = 0;
-                }
+            if (servicesMoreBtn) {
+                const serviceContent = document.querySelector('.service-content');
                 
-                slider.style.transform = `translateX(-${index * 100}%)`;
-                currentSlide = index;
-                
-                // Update dots
-                dots.forEach((dot, i) => {
-                    if (i === currentSlide) {
-                        dot.classList.remove('bg-gray-300');
-                        dot.classList.add('bg-primary');
+                servicesMoreBtn.addEventListener('click', function() {
+                    if (serviceContent.classList.contains('open')) {
+                        serviceContent.classList.remove('open');
+                        servicesMoreBtn.textContent = 'Подробнее';
                     } else {
-                        dot.classList.remove('bg-primary');
-                        dot.classList.add('bg-gray-300');
+                        serviceContent.classList.add('open');
+                        servicesMoreBtn.textContent = 'Свернуть';
                     }
                 });
             }
-            
-            prevBtn.addEventListener('click', () => {
-                goToSlide(currentSlide - 1);
-            });
-            
-            nextBtn.addEventListener('click', () => {
-                goToSlide(currentSlide + 1);
-            });
-            
-            dots.forEach((dot, i) => {
-                dot.addEventListener('click', () => {
-                    goToSlide(i);
+
+            const slider = document.querySelector('.review-slider');
+            if (slider) {
+                const slides = document.querySelectorAll('.review-slide');
+                const prevBtn = document.getElementById('prevReview');
+                const nextBtn = document.getElementById('nextReview');
+                const dots = [
+                    document.getElementById('dot0'),
+                    document.getElementById('dot1'),
+                    document.getElementById('dot2')
+                ];
+                
+                let currentSlide = 0;
+                const slideCount = slides.length;
+                
+                function goToSlide(index) {
+                    if (index < 0) {
+                        index = slideCount - 1;
+                    } else if (index >= slideCount) {
+                        index = 0;
+                    }
+                    
+                    slider.style.transform = `translateX(-${index * 100}%)`;
+                    currentSlide = index;
+                    
+                    dots.forEach((dot, i) => {
+                        if (i === currentSlide) {
+                            dot.classList.remove('bg-gray-300');
+                            dot.classList.add('bg-primary');
+                        } else {
+                            dot.classList.remove('bg-primary');
+                            dot.classList.add('bg-gray-300');
+                        }
+                    });
+                }
+                
+                if (prevBtn) prevBtn.addEventListener('click', () => {
+                    goToSlide(currentSlide - 1);
                 });
-            });
-            
-            // Auto slide
-            let interval = setInterval(() => {
-                goToSlide(currentSlide + 1);
-            }, 5000);
-            
-            // Pause on hover
-            slider.addEventListener('mouseenter', () => {
-                clearInterval(interval);
-            });
-            
-            slider.addEventListener('mouseleave', () => {
-                interval = setInterval(() => {
+                
+                if (nextBtn) nextBtn.addEventListener('click', () => {
+                    goToSlide(currentSlide + 1);
+                });
+                
+                dots.forEach((dot, i) => {
+                    dot.addEventListener('click', () => {
+                        goToSlide(i);
+                    });
+                });
+                
+                let interval = setInterval(() => {
                     goToSlide(currentSlide + 1);
                 }, 5000);
-            });
+                
+                slider.addEventListener('mouseenter', () => {
+                    clearInterval(interval);
+                });
+                
+                slider.addEventListener('mouseleave', () => {
+                    interval = setInterval(() => {
+                        goToSlide(currentSlide + 1);
+                    }, 5000);
+                });
+            }
         });
 
-        // Modal Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const worksMoreBtn = document.getElementById('worksMoreBtn');
+            if (worksMoreBtn) {
+                const workContent = document.querySelector('.work-content');
+                
+                worksMoreBtn.addEventListener('click', function() {
+                    if (workContent.classList.contains('open')) {
+                        workContent.classList.remove('open');
+                        worksMoreBtn.textContent = 'Подробнее';
+                    } else {
+                        workContent.classList.add('open');
+                        worksMoreBtn.textContent = 'Свернуть';
+                    }
+                });
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const bookBtn = document.getElementById('bookBtn');
             const heroBookBtn = document.getElementById('heroBookBtn');
@@ -772,68 +1009,69 @@ input:checked + .slider:before {
                 document.body.style.overflow = '';
             }
             
-            bookBtn.addEventListener('click', openModal);
-            heroBookBtn.addEventListener('click', openModal);
+            if (bookBtn) bookBtn.addEventListener('click', openModal);
+            if (heroBookBtn) heroBookBtn.addEventListener('click', openModal);
             
-            closeModal.addEventListener('click', closeModalFunc);
+            if (closeModal) closeModal.addEventListener('click', closeModalFunc);
             
-            bookingModal.addEventListener('click', function(e) {
+            if (bookingModal) bookingModal.addEventListener('click', function(e) {
                 if (e.target === bookingModal) {
                     closeModalFunc();
                 }
             });
             
-            bookingForm.addEventListener('submit', function(e) {
+            if (bookingForm) bookingForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Here you would normally send the form data to the server
                 alert('Спасибо за запись! Мы свяжемся с вами для подтверждения.');
                 
                 closeModalFunc();
                 bookingForm.reset();
             });
             
-            // Phone mask
             const phoneInput = document.getElementById('phone');
-            phoneInput.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, '');
-                let formattedValue = '';
-                
-                if (value.length > 0) {
-                    formattedValue = '+7 ';
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    let formattedValue = '';
                     
-                    if (value.length > 1) {
-                        formattedValue += `(${value.substring(1, Math.min(4, value.length))})`;
+                    if (value.length > 0) {
+                        formattedValue = '+7 ';
+                        
+                        if (value.length > 1) {
+                            formattedValue += `(${value.substring(1, Math.min(4, value.length))})`;
+                        }
+                        
+                        if (value.length > 4) {
+                            formattedValue += ` ${value.substring(4, Math.min(7, value.length))}`;
+                        }
+                        
+                        if (value.length > 7) {
+                            formattedValue += `-${value.substring(7, Math.min(9, value.length))}`;
+                        }
+                        
+                        if (value.length > 9) {
+                            formattedValue += `-${value.substring(9, Math.min(11, value.length))}`;
+                        }
                     }
                     
-                    if (value.length > 4) {
-                        formattedValue += ` ${value.substring(4, Math.min(7, value.length))}`;
-                    }
-                    
-                    if (value.length > 7) {
-                        formattedValue += `-${value.substring(7, Math.min(9, value.length))}`;
-                    }
-                    
-                    if (value.length > 9) {
-                        formattedValue += `-${value.substring(9, Math.min(11, value.length))}`;
-                    }
-                }
-                
-                e.target.value = formattedValue;
-            });
+                    e.target.value = formattedValue;
+                });
+            }
             
-            // Set min date to today
             const dateInput = document.getElementById('date');
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            let mm = today.getMonth() + 1;
-            let dd = today.getDate();
-            
-            if (mm < 10) mm = '0' + mm;
-            if (dd < 10) dd = '0' + dd;
-            
-            const formattedToday = yyyy + '-' + mm + '-' + dd;
-            dateInput.min = formattedToday;
+            if (dateInput) {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                let mm = today.getMonth() + 1;
+                let dd = today.getDate();
+                
+                if (mm < 10) mm = '0' + mm;
+                if (dd < 10) dd = '0' + dd;
+                
+                const formattedToday = yyyy + '-' + mm + '-' + dd;
+                dateInput.min = formattedToday;
+            }
         });
     </script>
 </body>
